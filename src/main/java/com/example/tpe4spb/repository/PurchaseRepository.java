@@ -1,12 +1,5 @@
 package com.example.tpe4spb.repository;
 
-<<<<<<< HEAD
-import com.example.tpe4spb.model.Purchase;
-import org.springframework.data.jpa.repository.JpaRepository;
-
-public interface PurchaseRepository extends JpaRepository<Purchase, Long> {
-
-=======
 import com.example.tpe4spb.dto.ClientBalanceReportDTO;
 import com.example.tpe4spb.dto.PurchaseQueryDTO;
 import com.example.tpe4spb.model.Purchase;
@@ -28,5 +21,4 @@ public interface PurchaseRepository extends JpaRepository<Purchase, Long> {
 //
 //    @Query("SELECT t FROM Person t where t.name = :name")
 //    public List<Person> findAllByName(String name);
->>>>>>> 865b1f7b8eb16628dec09e700491d44c6c4479c3
 }
