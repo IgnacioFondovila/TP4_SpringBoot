@@ -6,17 +6,21 @@ import javax.persistence.*;
 
 @Entity
 @Data
-public class Purchase implements serializable {
-        @Column
-        private Integer  count;
+public class Purchase {
+
         @Id
-        @MapsId
+        @GeneratedValue(strategy = GenerationType.AUTO)
+        private int id;
+
+        @Column
+        private Integer count;
+
         @ManyToOne
         private Product product;
-        @Id
-        @MapsId
+
         @ManyToOne
         private Client client;
+
 
     public Purchase() {
         super();

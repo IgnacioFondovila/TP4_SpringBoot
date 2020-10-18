@@ -18,9 +18,8 @@ public class Client {
         private String name;
         @Column
         private String surname;
-        @OneToMany
+        @OneToMany(mappedBy = "client")
         private List<Purchase> purchases;
-
 
         public Client() {
         }
