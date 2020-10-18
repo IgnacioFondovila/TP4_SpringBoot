@@ -31,4 +31,49 @@ public class Product {
                 this.price = price;
                 this.stock = stock;
         }
+
+
+        //Getters y setters..-------------------------------------
+        //No los tendría que hacer Loombok automáticamente??
+        //Se colocaron para que no tire error en su Controller
+
+        public Long getId() {
+                return id;
+        }
+
+        public void setId(Long id) {
+                this.id = id;
+        }
+
+        public String getName() {
+                return name;
+        }
+
+        public void setName(String name) {
+                this.name = name;
+        }
+
+        public Integer getPrice() {
+                return price;
+        }
+
+        public void setPrice(Integer price) {
+                this.price = price;
+        }
+
+        public Integer getStock() {
+                return stock;
+        }
+
+        public void setStock(Integer stock) {
+                this.stock = stock;
+        }
+
+        public List<Purchase> getPurchases() {
+                return purchases;
+        }
+
+        public void setPurchases(List<Purchase> purchases) {
+                this.purchases = purchases;
+        }
 }
