@@ -34,6 +34,7 @@ class TestInsert {
                 Product p7 = repoProduct.save(new Product("Azúcar", 105, 700));
                 repoPurchase.save(new Purchase(5, p1, c1));
                 repoPurchase.save(new Purchase(10, p4, c2));
+                repoPurchase.save(new Purchase(14, p5, c2));
             };
         }
 }
