@@ -5,10 +5,15 @@ public class ClientBalanceReportDTO {
     private String name;
     private Integer balance;
 
+//    private int aux;
+
     public ClientBalanceReportDTO(){}
-    public ClientBalanceReportDTO(String name, int pr, int cnt ) {
+//    public ClientBalanceReportDTO(String name, int pr, int cnt ) {
+//    Devuelve la multiplicacion directamente
+        public ClientBalanceReportDTO(String name, int balance) {
         this.name = name;
-        this.setBalance(pr, cnt);
+        this.balance = balance;
+//        this.setBalance(pr, cnt);
     }
 
     public String getName() {
@@ -22,8 +27,8 @@ public class ClientBalanceReportDTO {
     public Integer getBalance() {
         return balance;
     }
-
-    public void setBalance(int pr,int cnt) {
-        this.balance = pr*cnt;
+//
+    public void setBalance(int balance) {
+        this.balance = balance;
     }
 }

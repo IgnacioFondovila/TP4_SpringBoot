@@ -32,11 +32,6 @@ public class Client {
             this.surname = surname;
         }
 
-
-        //Getters y setters..-------------------------------------
-        //No los tendría que hacer Loombok automáticamente??
-        //Se colocaron para que no tire error en su Controller
-
         public String getName() {
             return name;
         }

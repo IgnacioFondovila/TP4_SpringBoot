@@ -16,10 +16,7 @@ public class Purchase {
 
         @Column
         private Integer count;
-        //Fecha o conjunto de variables?
-        //@Column
-        //private Date date;
-        // @
+
         @Column
         private Integer day;
         @Column

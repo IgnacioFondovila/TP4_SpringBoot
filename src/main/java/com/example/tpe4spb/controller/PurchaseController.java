@@ -8,8 +8,10 @@ import com.example.tpe4spb.model.Purchase;
 import com.example.tpe4spb.repository.PurchaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,11 +33,6 @@ public class PurchaseController {
     @GetMapping("")
     public Iterable<Purchase> getPurchases(){
         return repo.findAll();
-    }
-
-    @GetMapping("/mostsell")
-    public List<Product> getProductMostBuy(){
-        return repo.findMostSell();
     }
 
     @GetMapping("/{id}")
@@ -78,29 +75,35 @@ public class PurchaseController {
                 });
     }
 
-    //Método para obtener el reporte diario de ventas-----------------------------
-//    @GetMapping("/report")
-//    public List<PurchaseQueryDTO> report(){
-//        return repo.getBalanceForClients();
-//    }
-    @GetMapping("/report/clients")
-    public List<ClientBalanceReportDTO> getClientsReport() {
-        ArrayList<PurchaseQueryDTO> pq=(ArrayList<PurchaseQueryDTO>) repo.getBalanceForClients();
-        ArrayList<ClientBalanceReportDTO> cbr= new ArrayList<ClientBalanceReportDTO>();
-        for (int i = 0; i <pq.size(); i++) {
-            PurchaseQueryDTO aux = pq.get(i);
-            ClientBalanceReportDTO cb = new ClientBalanceReportDTO(aux.getClientName(),aux.getPrice_x_Product(),aux.getTotalUnits());
-            cbr.add(cb);
-        }
-//        cbr.sort();
-        return cbr;
-    }
-
+    //Método que da el reporte diario totall-------------------------------------------
     @GetMapping("/report/day/{day}/month/{month}/year/{year}")
     List<Purchase> getClientsReport(@PathVariable Integer day,@PathVariable Integer month,@PathVariable Integer year) {
         return repo.getDayBalance(day,month,year);
     }
 
+    //Método para obtener el reporte total de ventas por cliente---------------------------
+//    @GetMapping("/report")
+//    public List<PurchaseQueryDTO> report(){
+//        return repo.getBalanceForClients();
+//    }
+//    @GetMapping("/report/clients")
+//    public List<ClientBalanceReportDTO> getClientsReport() {
+//        ArrayList<PurchaseQueryDTO> pq=(ArrayList<PurchaseQueryDTO>) repo.getBalanceForClients();
+//        ArrayList<ClientBalanceReportDTO> cbr= new ArrayList<ClientBalanceReportDTO>();
+//        for (int i = 0; i <pq.size(); i++) {
+//            PurchaseQueryDTO aux = pq.get(i);
+//            ClientBalanceReportDTO cb = new ClientBalanceReportDTO(aux.getClientName(),aux.getPrice_x_Product(),aux.getTotalUnits());
+//            cbr.add(cb);
+//        }
+////        cbr.sort();
+//        return cbr;
+//    }
+
+    //Método para conseguir el producto más vendido de todos---------------------
+    @GetMapping("/mostsell")
+    public Product getProductMostBuy(){
+        return (Product) repo.findMostSell(PageRequest.of(0,1));
+    }
 
 }
 

@@ -4,6 +4,7 @@ import com.example.tpe4spb.dto.ClientBalanceReportDTO;
 import com.example.tpe4spb.dto.PurchaseQueryDTO;
 import com.example.tpe4spb.model.Product;
 import com.example.tpe4spb.model.Purchase;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -12,15 +13,15 @@ import java.util.List;
 public interface PurchaseRepository extends JpaRepository<Purchase, Long> {
 //        @Query( "SELECT concat(c.name, ' ', c.surname), p.count,pr.price FROM Purchase p , Client c,Product pr WHERE p.client = c.dni AND p.product = pr.id");
 //    @Query("SELECT concat(c.name,' ', c.surname), pu.count,pr.price FROM Purchase pu JOIN pu.client c JOIN pu.product pr")
-    @Query("SELECT new com.example.tpe4spb.dto.PurchaseQueryDTO(CONCAT(c.name,' ',c.surname), pu.count,pr.price) FROM Purchase pu JOIN pu.client c JOIN pu.product pr")
-    public List<PurchaseQueryDTO> getBalanceForClients();
+    @Query("SELECT new com.example.tpe4spb.dto.ClientBalanceReportDTO(CONCAT(c.name,' ',c.surname), (pu.count*pr.price)) FROM Purchase pu JOIN pu.client c JOIN pu.product pr")
+    public List<ClientBalanceReportDTO> getBalanceForClients();
 
     @Query("SELECT p FROM Purchase p where  p.day=:day AND p.month=:month AND p.year=:year")
     public List<Purchase> getDayBalance(Integer day,Integer month, Integer year);
 
 
-    @Query  ("SELECT  p.product FROM Purchase p  GROUP BY p.product ")
-    public List<Product> findMostSell();
+    @Query  ("SELECT p.product FROM Purchase p GROUP BY p.product ORDER BY p.count")
+    public List<Product> findMostSell(PageRequest page);
 }
 
 //@Query( "SELECT  c.surname, p.count FROM PURCHASE p JOIN p.client");
