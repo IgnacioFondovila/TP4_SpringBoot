@@ -27,6 +27,7 @@ public class ProductController {
         return repo.findAll();
     }
 
+
     @GetMapping("/{id}")
     public Optional<Product> one(@PathVariable Long id){
         return repo.findById(id);
@@ -47,9 +48,15 @@ public class ProductController {
 
         return repo.findById(id)
                 .map(product -> {
-                    product.setName(newProduct.getName());
-                    product.setPrice(newProduct.getPrice());
-                    product.setStock(newProduct.getStock());
+                    if(newProduct.getName()!=null){
+                        product.setName(newProduct.getName());
+                    }
+                    if(newProduct.getPrice()!=null){
+                        product.setPrice(newProduct.getPrice());
+                    }
+                    if(newProduct.getStock()!=null){
+                        product.setStock(newProduct.getStock());
+                    }
                     product.setPurchases(newProduct.getPurchases());
                     return repo.save(product);
                 })

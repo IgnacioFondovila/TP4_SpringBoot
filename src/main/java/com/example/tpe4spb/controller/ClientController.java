@@ -47,8 +47,12 @@ public class ClientController {
 
         return repo.findById(dni)
                 .map(client -> {
-                    client.setName(newClient.getName());
-                    client.setSurname(newClient.getSurname());
+                    if(newClient.getName()!=null) {
+                        client.setName(newClient.getName());
+                    }
+                    if(newClient.getSurname()!=null) {
+                        client.setSurname(newClient.getSurname());
+                    }
                     client.setPurchases(newClient.getPurchases());
                     return repo.save(client);
                 })

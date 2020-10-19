@@ -3,6 +3,7 @@ package com.example.tpe4spb.controller;
 
 import com.example.tpe4spb.dto.ClientBalanceReportDTO;
 import com.example.tpe4spb.dto.PurchaseQueryDTO;
+import com.example.tpe4spb.model.Product;
 import com.example.tpe4spb.model.Purchase;
 import com.example.tpe4spb.repository.PurchaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,11 @@ public class PurchaseController {
         return repo.findAll();
     }
 
+    @GetMapping("/mostsell")
+    public List<Product> getProductMostBuy(){
+        return repo.findMostSell();
+    }
+
     @GetMapping("/{id}")
     public Optional<Purchase> one(@PathVariable Long id){
         return repo.findById(id);
@@ -52,10 +58,18 @@ public class PurchaseController {
 
         return repo.findById(id)
                 .map(purchase -> {
-                    purchase.setCount(newPurchase.getCount());
-                    purchase.setDay(newPurchase.getDay());
-                    purchase.setMonth(newPurchase.getMonth());
-                    purchase.setYear(newPurchase.getYear());
+                    if(newPurchase.getCount()!=null){
+                        purchase.setCount(newPurchase.getCount());
+                    }
+                    if(newPurchase.getDay()!=null) {
+                        purchase.setDay(newPurchase.getDay());
+                    }
+                    if(newPurchase.getMonth()!=null) {
+                        purchase.setMonth(newPurchase.getMonth());
+                    }
+                    if(newPurchase.getYear()!=null) {
+                        purchase.setYear(newPurchase.getYear());
+                    }
                     return repo.save(purchase);
                 })
                 .orElseGet(() -> {
@@ -86,7 +100,6 @@ public class PurchaseController {
     List<Purchase> getClientsReport(@PathVariable Integer day,@PathVariable Integer month,@PathVariable Integer year) {
         return repo.getDayBalance(day,month,year);
     }
-
 
 
 }

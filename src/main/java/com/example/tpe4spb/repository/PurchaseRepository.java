@@ -2,6 +2,7 @@ package com.example.tpe4spb.repository;
 
 import com.example.tpe4spb.dto.ClientBalanceReportDTO;
 import com.example.tpe4spb.dto.PurchaseQueryDTO;
+import com.example.tpe4spb.model.Product;
 import com.example.tpe4spb.model.Purchase;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,7 +17,11 @@ public interface PurchaseRepository extends JpaRepository<Purchase, Long> {
 
     @Query("SELECT p FROM Purchase p where  p.day=:day AND p.month=:month AND p.year=:year")
     public List<Purchase> getDayBalance(Integer day,Integer month, Integer year);
-//    List<String> getBalanceForClients();
+
+
+    @Query  ("SELECT  p.product FROM Purchase p  GROUP BY p.product ")
+    public List<Product> findMostSell();
+}
 
 //@Query( "SELECT  c.surname, p.count FROM PURCHASE p JOIN p.client");
     //    public List<PurchaseQueryDTO> findAllBySurname(String@Query("SELECT t FROM Person t where t.surname = :surname")
@@ -24,4 +29,4 @@ public interface PurchaseRepository extends JpaRepository<Purchase, Long> {
 //
 //    @Query("SELECT t FROM Person t where t.name = :name")
 //    public List<Person> findAllByName(String name);
-}
+
