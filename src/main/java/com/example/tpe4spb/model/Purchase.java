@@ -3,6 +3,7 @@ package com.example.tpe4spb.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.Date;
 
 @Entity
@@ -28,7 +29,6 @@ public class Purchase {
 
         @ManyToOne
         private Product product;
-
         @ManyToOne
         private Client client;
 
@@ -36,10 +36,16 @@ public class Purchase {
     public Purchase() {
         super();
     }
+
     public Purchase(Integer count, Product product, Client client) {
         this.count = count;
         this.product = product;
         this.client = client;
+
+        Calendar c1 = Calendar.getInstance();
+        this.day = c1.get(Calendar.DATE);
+        this.month = c1.get(Calendar.MONTH);
+        this.year = c1.get(Calendar.YEAR);
     }
 
     public Long getId() {

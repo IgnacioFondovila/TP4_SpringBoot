@@ -14,7 +14,7 @@ public class ClientController {
 
     @Qualifier("clientRepository")
     @Autowired
-    private final ClientRepository repo;
+    public final ClientRepository repo;
 
     //Se declara el repo----------------------------------
     public ClientController (@Qualifier("clientRepository") ClientRepository repository){
@@ -22,7 +22,7 @@ public class ClientController {
     }
 
     //Métodos CRUD aquí abajo------------------------------
-    @GetMapping("/")
+    @GetMapping("")
     public Iterable<Client> getClients(){
         return repo.findAll();
     }

@@ -1,17 +1,16 @@
 package com.example.tpe4spb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Data
 public class Product {
         @Id
+        @GeneratedValue(strategy = GenerationType.AUTO)
         private Long id;
         @Column
         private String name;
@@ -20,6 +19,7 @@ public class Product {
         @Column
         private Integer stock ;
         @OneToMany(mappedBy = "product")
+        @JsonIgnore
         private List<Purchase> purchases;
 
         public Product(){

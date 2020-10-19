@@ -1,12 +1,16 @@
 package com.example.tpe4spb.controller;
 
 
+import com.example.tpe4spb.dto.ClientBalanceReportDTO;
+import com.example.tpe4spb.dto.PurchaseQueryDTO;
 import com.example.tpe4spb.model.Purchase;
 import com.example.tpe4spb.repository.PurchaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -23,7 +27,7 @@ public class PurchaseController {
     }
 
     //Métodos CRUD aquí abajo------------------------------
-    @GetMapping("/")
+    @GetMapping("")
     public Iterable<Purchase> getPurchases(){
         return repo.findAll();
     }
@@ -59,6 +63,31 @@ public class PurchaseController {
                     return repo.save(newPurchase);
                 });
     }
+
+    //Método para obtener el reporte diario de ventas-----------------------------
+//    @GetMapping("/report")
+//    public List<PurchaseQueryDTO> report(){
+//        return repo.getBalanceForClients();
+//    }
+    @GetMapping("/report/clients")
+    public List<ClientBalanceReportDTO> getClientsReport() {
+        ArrayList<PurchaseQueryDTO> pq=(ArrayList<PurchaseQueryDTO>) repo.getBalanceForClients();
+        ArrayList<ClientBalanceReportDTO> cbr= new ArrayList<ClientBalanceReportDTO>();
+        for (int i = 0; i <pq.size(); i++) {
+            PurchaseQueryDTO aux = pq.get(i);
+            ClientBalanceReportDTO cb = new ClientBalanceReportDTO(aux.getClientName(),aux.getPrice_x_Product(),aux.getTotalUnits());
+            cbr.add(cb);
+        }
+//        cbr.sort();
+        return cbr;
+    }
+
+    @GetMapping("/report/day/{day}/month/{month}/year/{year}")
+    List<Purchase> getClientsReport(@PathVariable Integer day,@PathVariable Integer month,@PathVariable Integer year) {
+        return repo.getDayBalance(day,month,year);
+    }
+
+
 
 }
 

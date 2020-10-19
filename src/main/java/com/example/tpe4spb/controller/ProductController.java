@@ -22,7 +22,7 @@ public class ProductController {
     }
 
     //Métodos CRUD aquí abajo------------------------------
-    @GetMapping("/")
+    @GetMapping("")
     public Iterable<Product> getProducts(){
         return repo.findAll();
     }

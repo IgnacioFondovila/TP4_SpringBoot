@@ -1,5 +1,6 @@
 package com.example.tpe4spb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -19,6 +20,7 @@ public class Client {
         @Column
         private String surname;
         @OneToMany(mappedBy = "client")
+        @JsonIgnore
         private List<Purchase> purchases;
 
         public Client() {

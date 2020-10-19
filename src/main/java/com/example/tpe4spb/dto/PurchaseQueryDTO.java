@@ -3,12 +3,10 @@ package com.example.tpe4spb.dto;
 public class PurchaseQueryDTO {
 
     private String clientName;
+    private Integer totalUnits;
+    private Integer price_x_Product;
 
-    private int totalUnits;
-
-    private int price_x_Product;
-
-    public PurchaseQueryDTO(String clientName, int totalUnits, int price_x_Product) {
+    public PurchaseQueryDTO(String clientName, Integer totalUnits, Integer price_x_Product) {
         this.clientName = clientName;
         this.totalUnits = totalUnits;
         this.price_x_Product = price_x_Product;
