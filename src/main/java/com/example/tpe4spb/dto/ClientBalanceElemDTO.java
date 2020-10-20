@@ -1,18 +1,19 @@
 package com.example.tpe4spb.dto;
 
-public class ClientBalanceReportDTO {
+public class ClientBalanceElemDTO {
 
     private String name;
     private Integer balance;
 
 //    private int aux;
 
-    public ClientBalanceReportDTO(){}
-//    public ClientBalanceReportDTO(String name, int pr, int cnt ) {
+    public ClientBalanceElemDTO(){}
+
+//    public ClientBalanceElemDTO(String name, int pr, int cnt ) {
 //    Devuelve la multiplicacion directamente
-        public ClientBalanceReportDTO(String name, int balance) {
-        this.name = name;
-        this.balance = balance;
+        public ClientBalanceElemDTO(String name, int balance) {
+            this.name = name;
+            this.balance = balance;
 //        this.setBalance(pr, cnt);
     }
 

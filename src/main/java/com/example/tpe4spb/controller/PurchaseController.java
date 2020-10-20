@@ -1,8 +1,8 @@
 package com.example.tpe4spb.controller;
 
 
-import com.example.tpe4spb.dto.ClientBalanceReportDTO;
-import com.example.tpe4spb.dto.PurchaseQueryDTO;
+import com.example.tpe4spb.dto.ClientBalanceElemDTO;
+import com.example.tpe4spb.dto.ClientsBalanceReportDTO;
 import com.example.tpe4spb.model.Product;
 import com.example.tpe4spb.model.Purchase;
 import com.example.tpe4spb.repository.PurchaseRepository;
@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.print.Pageable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,7 +44,7 @@ public class PurchaseController {
     }
 
     @DeleteMapping("/{id}")
-    void deletePerson(@PathVariable Long id) {
+    void deletePurchase(@PathVariable Long id) {
         repo.deleteById(id);
     }
 
@@ -82,17 +80,19 @@ public class PurchaseController {
     }
 
     //Método para obtener el reporte total de ventas por cliente---------------------------
-//    @GetMapping("/report")
-//    public List<PurchaseQueryDTO> report(){
-//        return repo.getBalanceForClients();
-//    }
+    @GetMapping("/report")
+    public ClientsBalanceReportDTO report(){
+        List<ClientBalanceElemDTO> p=repo.getBalanceForClients();
+        ClientsBalanceReportDTO c= new ClientsBalanceReportDTO(p);
+        return c;
+    }
 //    @GetMapping("/report/clients")
-//    public List<ClientBalanceReportDTO> getClientsReport() {
-//        ArrayList<PurchaseQueryDTO> pq=(ArrayList<PurchaseQueryDTO>) repo.getBalanceForClients();
-//        ArrayList<ClientBalanceReportDTO> cbr= new ArrayList<ClientBalanceReportDTO>();
+//    public List<ClientBalanceElemDTO> getClientsReport() {
+//        ArrayList<ClientsBalanceReportDTO> pq=(ArrayList<ClientsBalanceReportDTO>) repo.getBalanceForClients();
+//        ArrayList<ClientBalanceElemDTO> cbr= new ArrayList<ClientBalanceElemDTO>();
 //        for (int i = 0; i <pq.size(); i++) {
-//            PurchaseQueryDTO aux = pq.get(i);
-//            ClientBalanceReportDTO cb = new ClientBalanceReportDTO(aux.getClientName(),aux.getPrice_x_Product(),aux.getTotalUnits());
+//            ClientsBalanceReportDTO aux = pq.get(i);
+//            ClientBalanceElemDTO cb = new ClientBalanceElemDTO(aux.getClientName(),aux.getPrice_x_Product(),aux.getTotalUnits());
 //            cbr.add(cb);
 //        }
 ////        cbr.sort();

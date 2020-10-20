@@ -1,7 +1,6 @@
 package com.example.tpe4spb.repository;
 
-import com.example.tpe4spb.dto.ClientBalanceReportDTO;
-import com.example.tpe4spb.dto.PurchaseQueryDTO;
+import com.example.tpe4spb.dto.ClientBalanceElemDTO;
 import com.example.tpe4spb.model.Product;
 import com.example.tpe4spb.model.Purchase;
 import org.springframework.data.domain.PageRequest;
@@ -13,8 +12,8 @@ import java.util.List;
 public interface PurchaseRepository extends JpaRepository<Purchase, Long> {
 //        @Query( "SELECT concat(c.name, ' ', c.surname), p.count,pr.price FROM Purchase p , Client c,Product pr WHERE p.client = c.dni AND p.product = pr.id");
 //    @Query("SELECT concat(c.name,' ', c.surname), pu.count,pr.price FROM Purchase pu JOIN pu.client c JOIN pu.product pr")
-    @Query("SELECT new com.example.tpe4spb.dto.ClientBalanceReportDTO(CONCAT(c.name,' ',c.surname), (pu.count*pr.price)) FROM Purchase pu JOIN pu.client c JOIN pu.product pr")
-    public List<ClientBalanceReportDTO> getBalanceForClients();
+    @Query("SELECT new com.example.tpe4spb.dto.ClientBalanceElemDTO(CONCAT(c.name,' ',c.surname), (pu.count*pr.price)) FROM Purchase pu JOIN pu.client c JOIN pu.product pr")
+    public List<ClientBalanceElemDTO> getBalanceForClients();
 
     @Query("SELECT p FROM Purchase p where  p.day=:day AND p.month=:month AND p.year=:year")
     public List<Purchase> getDayBalance(Integer day,Integer month, Integer year);
@@ -25,7 +24,7 @@ public interface PurchaseRepository extends JpaRepository<Purchase, Long> {
 }
 
 //@Query( "SELECT  c.surname, p.count FROM PURCHASE p JOIN p.client");
-    //    public List<PurchaseQueryDTO> findAllBySurname(String@Query("SELECT t FROM Person t where t.surname = :surname")
+    //    public List<ClientsBalanceReportDTO> findAllBySurname(String@Query("SELECT t FROM Person t where t.surname = :surname")
 //    public List<> findAllBySurname(String surname);
 //
 //    @Query("SELECT t FROM Person t where t.name = :name")
