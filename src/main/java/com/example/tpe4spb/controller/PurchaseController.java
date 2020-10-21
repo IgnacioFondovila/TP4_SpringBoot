@@ -101,8 +101,8 @@ public class PurchaseController {
 
     //Método para conseguir el producto más vendido de todos---------------------
     @GetMapping("/mostsell")
-    public Product getProductMostBuy(){
-        return (Product) repo.findMostSell(PageRequest.of(0,1));
+    public List<Product> getProductMostBuy(){
+        return repo.findMostSell(PageRequest.of(0,1));
     }
 
 }
