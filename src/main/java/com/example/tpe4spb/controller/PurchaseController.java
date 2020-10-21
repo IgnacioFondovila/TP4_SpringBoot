@@ -33,6 +33,12 @@ public class PurchaseController {
         return repo.findAll();
     }
 
+    //Método para conseguir el producto más vendido de todos---------------------
+    @GetMapping("/mostsell")
+    public List<Product> findMostSell(){
+        return repo.findMostSell(PageRequest.of(0,1));
+    }
+
     @GetMapping("/{id}")
     public Optional<Purchase> one(@PathVariable Long id){
         return repo.findById(id);
@@ -98,12 +104,6 @@ public class PurchaseController {
 ////        cbr.sort();
 //        return cbr;
 //    }
-
-    //Método para conseguir el producto más vendido de todos---------------------
-    @GetMapping("/mostsell")
-    public Product getProductMostBuy(){
-        return (Product) repo.findMostSell(PageRequest.of(0,1));
-    }
 
 }
 
