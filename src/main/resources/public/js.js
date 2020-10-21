@@ -38,10 +38,10 @@ if(form != null){
             let data = {
                 name: document.getElementById("name").value,
                 surname: document.getElementById("surname").value,
-                dni: document.getElementById("dni").value,
+                dni: document.getElementById("dni").value*1,
                 purchases: [],
             }
-            fetch(url + '/clients', {
+            fetch(url + '/clients/', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(data)
@@ -70,7 +70,55 @@ if(form != null){
         // }
         })
 }
+let putSelect = document.querySelector("#putSelect")
+putSelect.addEventListener("click", obtainClients)
 
+function obtainClients(){
+    let clients = getAllClientsToSelect()
+    for(let c of clients.value){
+        let opt = document.createElement("option")
+        let txt = document.createTextNode(c.name)
+        opt.append(txt)
+        opt.value = c.dni
+        putSelect.appendChild(opt)
+    }
+}
+
+let modifyClientForm = document.getElementById("modifyClient");
+if(form != null){
+    modifyClientForm.addEventListener('submit',function(e){
+        let alrt=document.querySelector("#putAlert");
+        alrt.hidden = true;
+        removeAllChildNodes(alrt);
+        e.preventDefault();
+        let data = {
+            name: document.getElementById("nameP").value,
+            surname: document.getElementById("surnameP").value,
+            dni: document.getElementById("dniP").value,
+            purchases: [],
+        }
+        let clientId = putSelect.value;
+        fetch(url + '/clients/'+clientId, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                let h = document.createElement("h4");
+                let txt = document.createTextNode("El cliente se modifico correctamente ")
+                h.append(txt)
+                alrt.appendChild(h)
+                alrt.hidden = false;
+            })
+            .catch(error => {
+                let h = document.createElement("h4");
+                let txt = document.createTextNode("El cliente No se modifico ");
+                h.append(txt);
+                alrt.appendChild(h);
+                alrt.hidden = false;
+            })
+    })
+}
 
 //Método para borrar un cliente por su dni
 let deleteClientForm = document.getElementById("deleteClientForm");
@@ -209,6 +257,24 @@ async function getAllClients(){
         console.log("Error obteniendo clientes");
     }
 }
+
+//Funcion auxiliar para obtener lista de clientes
+async function getAllClientsToSelect(){
+    let url2 = url+'/clients';
+    try {
+        let r = await fetch(url2, {
+            "method": "get"
+        });
+        let r2 = await r.json();
+        return r2
+        // let contStud= document.querySelector("#showClients");
+        // showClients(r2,contStud)
+    }catch (n) {
+        console.log("Error obteniendo clientes");
+        return null
+    }
+}
+
 
 // d) recuperar un cliente, en base a su dni.
 document.getElementById("getClientForm").addEventListener("submit",getClient)
@@ -500,7 +566,323 @@ async function showDayReport(e){
         	}
 }
 
+
+//Productooooo----------------------------------------------
+
+let prodForm = document.getElementById("addProduct");
+if(form != null){
+    form.addEventListener('submit',function(e){
+        let alrt=document.querySelector("#getProductAlert");
+        alrt.hidden = true;
+        removeAllChildNodes(alrt);
+        e.preventDefault();
+        let data = {
+            name: document.getElementById("namePr").value,
+            price: document.getElementById("price").value,
+            stock: document.getElementById("stock").value,
+            purchases: []
+        }
+        fetch(url + '/product/', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                let h = document.createElement("h4");
+                let txt = document.createTextNode("El producto se agregó correctamente ")
+                h.append(txt)
+                alrt.appendChild(h)
+                alrt.hidden = false;
+            })
+            .catch(error => {
+                let h = document.createElement("h4");
+                let txt = document.createTextNode("El cliente No se agrego ");
+                h.append(txt);
+                alrt.appendChild(h);
+                alrt.hidqden = false;
+            })
+    })
+}
+
+
+let btnGetAllProducts= document.getElementById("getProducts");
+btnGetAllProducts.addEventListener("click", getAllProducts);
+
+async function getAllProducts(){
+    let url2 = url+'/products/';
+    try {
+        let r = await fetch(url2, {
+            "method": "get"
+        }, showProducts);
+        let r2 = await r.json();
+        let contProd= document.querySelector("#showProducts");
+        showProducts(r2,contProd)
+    }catch (n) {
+        console.log("Error obteniendo clientes"+n);
+    }
+}
+
+document.getElementById("getProdForm").addEventListener("submit",getProductByID)
+let btnDeleteProd=document.getElementById("delPr")
+btnDeleteProd.addEventListener("click",function(e){deleteProduct(e)})
+
+async function getProductByID(e){
+    e.preventDefault();
+    let alrt=document.querySelector("#alertPr")
+    alrt.hidden=true
+    let prodID = document.querySelector("#getProd").value;
+    let div=document.getElementById("divGetProd");
+    removeAllChildNodes(div);
+    let url2 = url+'/products/'+prodID;
+    try {
+        let r = await fetch(url2, {
+            "method": "get"
+        });
+        let pr = await r.json();
+        if(pr!=null){
+            let tr= document.createElement("tr");
+            let liName = document.createElement("td");
+            let name = document.createTextNode("NAME");
+            liName.append(name)
+            let liPrice = document.createElement("td");
+            let price = document.createTextNode("PRICE");
+            liPrice.append(price);
+            let liStock = document.createElement("td");
+            let stock = document.createTextNode("STOCK");
+            liStock.append(stock);
+            tr.append(liName, liPrice, liStock);
+            div.appendChild(tr)
+            let ul = document.createElement("tr");
+            let liN = document.createElement("td");
+            let pName = document.createTextNode(pr.name);
+            liN.append(pName);
+            let li2Price = document.createElement("td");
+            let pPrice = document.createTextNode(pr.price);
+            li2Price.append(pPrice);
+            let liS = document.createElement("td");
+            let sStock = document.createTextNode(pr.stock);
+            liS.append(sStock);
+            // ul.append( liN, liS, liA, liG, liC, liDNI, liLU);
+            ul.append( liN, liS, liPrice);
+            div.appendChild(ul)
+            btnDeleteProd.hidden=false
+            div.hidden=false;
+        }else{
+            let h = document.createElement("h4");
+            let txt = document.createTextNode("No se encontró ningún Producto con el ID proporcionado");
+            h.append(txt);
+            alrt.appendChild(h);
+            alrt.hidden = false;
+        }
+    }catch (n) {
+        console.log("Error al obtener el Producto: "+n);
+        let h = document.createElement("h4");
+        let txt = document.createTextNode("No se encontró ningún Producto con el ID proporcionado");
+        h.append(txt);
+        removeAllChildNodes(alrt)
+        alrt.appendChild(h);
+        alrt.hidden = false;
+    }
+}
+document.getElementById("uptPr").addEventListener("click",function(){
+    let formUpdProd= document.getElementById("uptdateProduct");
+    formUpdProd.addEventListener("submit",updateProd)
+})
+function updateProd(){
+    let alrt=document.querySelector("#alertPr");
+    alrt.hidden = true;
+    removeAllChildNodes(alrt);
+    e.preventDefault();
+    let data = {
+        name:  document.getElementById("u_name").value,
+        price: document.getElementById("u_price").value,
+        stock: document.getElementById("u_stock").value
+    }
+    let prodId = document.querySelector("#getProd").value;
+    fetch(url + '/products/'+prodId, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    })
+        .then(pr => {
+
+            let div=document.getElementById("divGetProd");
+            removeAllChildNodes(div);
+            let tr= document.createElement("tr");
+            let liName = document.createElement("td");
+            let name = document.createTextNode("NAME");
+            liName.append(name)
+            let liPrice = document.createElement("td");
+            let price = document.createTextNode("PRICE");
+            liPrice.append(price);
+            let liStock = document.createElement("td");
+            let stock = document.createTextNode("STOCK");
+            liStock.append(stock);
+            tr.append(liName, liPrice, liStock);
+            div.appendChild(tr)
+            let ul = document.createElement("tr");
+            let liN = document.createElement("td");
+            let pName = document.createTextNode(pr.name);
+            liN.append(pName);
+            let li2Price = document.createElement("td");
+            let pPrice = document.createTextNode(pr.price);
+            li2Price.append(pPrice);
+            let liS = document.createElement("td");
+            let sStock = document.createTextNode(pr.stock);
+            liS.append(sStock);
+            // ul.append( liN, liS, liA, liG, liC, liDNI, liLU);
+            ul.append( liN, liS, liPrice);
+            div.appendChild(ul)
+            div.hidden=false
+            let h = document.createElement("h4");
+            let txt = document.createTextNode("El cliente se modifico correctamente ")
+            h.append(txt)
+            alrt.appendChild(h)
+            alrt.hidden = false;
+        })
+        .catch(error => {
+            let h = document.createElement("h4");
+            let txt = document.createTextNode("El cliente No se modifico ");
+            h.append(txt);
+            alrt.appendChild(h);
+            alrt.hidden = false;
+        })
+}
+
+
+
+function deleteProduct(e){
+    let alrt=document.querySelector("#alertDeleteProd");
+    alrt.hidden = true;
+    removeAllChildNodes(alrt);
+    e.preventDefault();
+    let id =document.querySelector("#getProd").value;
+    fetch(url + '/product/'+id, {
+        method: 'DELETE',
+    })
+        .then(response => {
+            let h = document.createElement("h4");
+            let txt = document.createTextNode("El producto se borró correctamente ")
+            h.append(txt)
+            alrt.appendChild(h)
+            alrt.hidden = false;
+        })
+        .catch(error => {
+            let h = document.createElement("h4");
+            let txt = document.createTextNode("El producto No se borró " + error);
+            h.append(txt);
+            alrt.appendChild(h);
+            alrt.hidden = false;
+        })
+}
+
+
+
+document.getElementById("getProductMostSell").addEventListener("click",getProductMostSell)
+
+async function getProductMostSell(e){
+    e.preventDefault();
+    let alrt=document.querySelector("#alertPrMost")
+    alrt.hidden=true
+    let div=document.getElementById("ProductMostSell");
+    removeAllChildNodes(div);
+    let url2 = url+'/purchases/mostsell';
+    try {
+        let r = await fetch(url2, {
+            "method": "get"
+        });
+        let pr = await r.json();
+
+        if(pr[0]!=null){
+            let tr= document.createElement("tr");
+            let liName = document.createElement("td");
+            let name = document.createTextNode("NAME");
+            liName.append(name)
+            let liPrice = document.createElement("td");
+            let price = document.createTextNode("PRICE");
+            liPrice.append(price);
+            let liStock = document.createElement("td");
+            let stock = document.createTextNode("STOCK");
+            liStock.append(stock);
+            tr.append(liName, liPrice, liStock);
+            div.appendChild(tr)
+            let ul = document.createElement("tr");
+            let liN = document.createElement("td");
+            let pName = document.createTextNode(pr[0].name);
+            liN.append(pName);
+            let li2Price = document.createElement("td");
+            let pPrice = document.createTextNode(pr[0].price);
+            li2Price.append(pPrice);
+            let liS = document.createElement("td");
+            let sStock = document.createTextNode(pr[0].stock);
+            liS.append(sStock);
+            // ul.append( liN, liS, liA, liG, liC, liDNI, liLU);
+            ul.append( liN, liS, liPrice);
+            div.appendChild(ul)
+            btnDeleteProd.hidden=false
+            div.hidden=false;
+        }else{
+            let h = document.createElement("h4");
+            let txt = document.createTextNode("No se encontró ningún Producto con el ID proporcionado");
+            h.append(txt);
+            alrt.appendChild(h);
+            alrt.hidden = false;
+        }
+    }catch (n) {
+        console.log("Error al obtener el Producto: "+n);
+        let h = document.createElement("h4");
+        let txt = document.createTextNode("No se encontró ningún Producto con el ID proporcionado");
+        h.append(txt);
+        removeAllChildNodes(alrt)
+        alrt.appendChild(h);
+        alrt.hidden = false;
+    }
+}
+
+
+
+
+
 //---------------------helpers------------------------------------
+function showProducts(products,container) {
+    removeAllChildNodes(container);
+
+    let tr= document.createElement("tr");
+    let liName = document.createElement("td");
+    let name = document.createTextNode("NAME");
+    liName.append(name)
+    let liPrice = document.createElement("td");
+    let price = document.createTextNode("PRICE");
+    liPrice.append(price);
+    let liStock = document.createElement("td");
+    let stock = document.createTextNode("STOCK");
+    liStock.append(stock);
+    let liI = document.createElement("td");
+    let _ID = document.createTextNode("ID");
+    liI.append(_ID);
+    tr.append(liName, liPrice, liStock,liI);
+    container.appendChild(tr)
+
+    for (let pr of products) {
+        let ul = document.createElement("tr");
+        let liN = document.createElement("td");
+        let sName = document.createTextNode(pr.name);
+        liN.append(sName);
+        let liP = document.createElement("td");
+        let prP = document.createTextNode(pr.price);
+        liP.append(prP);
+        let liSt = document.createElement("td");
+        let prSt = document.createTextNode(pr.stock);
+        liSt.append(prSt);
+        ul.append( liN, liP, liSt);
+        let liID = document.createElement("td");
+        let prID = document.createTextNode(pr.id);
+        liID.append(prID);
+        ul.append( liN, liP, liSt,liID);
+        container.appendChild(ul)
+    }
+}
+
 
 function showClients(clients,container) {
     removeAllChildNodes(container);

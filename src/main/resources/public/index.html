@@ -15,10 +15,24 @@
 	<h3> Dar de alta un cliente </h3>
 	<div id="alert" class="alert alert-warning" role="alert" hidden>
 	</div>
-	<form id="addClient" method="POST">
+	<form id="addClient">
 		<input required placeholder="dni" id="dni" type="number">
 		<input required placeholder="name" id="name" type="text">
 		<input required placeholder="surname" id="surname" type="text">
+		<input type="submit" value="Dar de alta">
+	</form>
+</div>
+
+<div class="putClientContainer">
+	<h3> Modificar un cliente </h3>
+	<div id="putAlert" class="alert alert-warning" role="alert" hidden>
+	</div>
+	<form id="modifyClient" method="POST">
+		<select id="putSelect">
+		</select>
+		<input required placeholder="dni" id="dniP" type="number">
+		<input required placeholder="name" id="nameP" type="text">
+		<input required placeholder="surname" id="surnameP" type="text">
 		<input type="submit" value="Dar de alta">
 	</form>
 </div>
@@ -124,6 +138,61 @@
 	</div>
 </div>
 
+
+<div class="container">
+	<h3> Agregar un producto </h3>
+	<div id="addProductAlert" class="alert alert-warning" role="alert" hidden>
+	</div>
+	<form id="addProduct">
+		<input required placeholder="name" id="namePr" type="text">
+		<input required placeholder="price" id="price" type="number">
+		<input required placeholder="stock" id="stock" type="number">
+		<input type="submit" value="Dar de alta">
+	</form>
+</div>
+
+<div class="container">
+	<h3> Obtener productos </h3>
+	<input id="getProducts" type="button" value="Obtener todos los productos">
+	<div id="showProducts">
+	</div>
+</div>
+
+<div class="container">
+	<h3> Obtener producto por ID</h3>
+	<div id="alertPr" class="alert alert-warning" role="alert" hidden>
+	</div>
+	<div id="alertDeleteProd" class="alert alert-warning" role="alert" hidden>
+	</div>
+	<form id="getProdForm">
+		<input required id="getProd" type="number" placeholder="Numero de identificacion">
+		<input type="submit" value="Obtener">
+	</form>
+	<div hidden id="divGetProd">
+
+	</div>
+	<input hidden type="button" id="delPr" value="Delete Product">
+
+	<input hidden type="button" id="uptPr" value="Modify Product">
+
+	<form hidden id="uptdateProduct">
+		<input required placeholder="name"  id="u_name" type="text">
+		<input required placeholder="price" id="u_price" type="number">
+		<input required placeholder="stock" id="u_stock" type="number">
+		<input type="submit" value="Uptadate">
+	</form>
+</div>
+
+
+<div class="container">
+	<div id="alertPrMost" class="alert alert-warning" role="alert" hidden>
+	</div>
+	<input id="getProductMostSell" type="button" value="Obtener producto mas vendido">
+	<div hidden id="ProductMostSell" >
+
+	</div>
+</div>
+
 <div class="getDayReport">
 	<h3> Obtener reporte diario de las ventas </h3>
 	<input id="getDayReport" type="button" value="Obtener">
@@ -140,132 +209,3 @@
 </html>
 
 
-
-
-
-
-
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="style.css">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<title>TP 3 - Grupo 11</title>
-</head>
-<header>
-	<h2>Arquitectura Web - TUDAI</h2>
-</header>
-<body>
-<div class="addSt">
-	<h3> Dar de alta un estudiante </h3>
-	<form id="addStudent" method="POST">
-		<input required placeholder="name" id="name" type="text">
-		<input required placeholder="surname" id="surname" type="text">
-		<input required placeholder="age" id="age" type="number">
-		<select required id="genre">
-			<option value="0" selected hidden>Genre</option>
-			<option value="m">Maculino</option>
-			<option value="f">Femenino</option>
-		</select>
-		<input required placeholder="dni" id="dni" type="number">
-		<input required placeholder="city" id="city" type="text">
-		<input type="submit">
-	</form>
-	<div id="alert" class="alert alert-warning" role="alert" hidden></div>
-</div>
-
-<div class="addMt">
-	<h3> Matricular</h3>
-	<form id="addMat" method="POST">
-		<input required type="text"  id="MatriLu" placeholder="lu">
-		<input required type="number" id="starYear" placeholder="starYear" >
-		<input type="number" id="graduationYear" placeholder="graduationYear" >
-		<select id="allCareers1" class="allCareers">
-			<option value="0" selected hidden>Carreras</option>
-		</select>
-		<input type="submit">
-	</form>
-	<div id="alertMat" class="alert alert-warning" role="alert" hidden></div>
-</div>
-
-<div class="getSts">
-	<h3> Obtener todos los estudiantes (ordenados por nombre)</h3>
-	<input id="getStudents" type="button" value="Obtener">
-	<div id="showStudents">
-
-	</div>
-</div>
-
-<div class="getSt">
-	<h3> Obtener estudiante por número de Libreta Universitaria</h3>
-	<form id="getStudentForm">
-		<input required id="getStudent" type="text" placeholder="Libreta Universitaria">
-		<input type="submit" value="Obtener">
-	</form>
-	<div hidden id="divInner">
-	Aquí va el Response
-	</div>
-	<div id="alertSt" class="alert alert-warning" role="alert" hidden></div>
-</div>
-
-<div class="getStsByG">
-	<h3> Obtener estudiantes según género</h3>
-	<form id="getAllStudentsByGenre">
-		<select required id="studentGenre">
-			<option value="0" selected hidden>Genre</option>
-			<option value="m">Maculino</option>
-			<option value="f">Femenino</option>
-		</select>
-		<input id="btnSbyGenre" type="submit" value="Obtener">
-	</form>
-	<div hidden id="divByG">
-
-	</div>
-	<div id="alertGenre" class="alert alert-warning" role="alert" hidden></div>
-</div>
-
-
-<div class="getCr">
-	<h3> Obtener carrera</h3>
-	<input type="button" id="getCareer" value="Todas las carreras con inscriptos">
-</div>
-
-
-<div class="getStsByC">
-	<h3> Obtener estudiantes según carrera</h3>
-	<select id="allCareers2" class="allCareers">
-		<option value="0" selected hidden>Carreras</option>
-	</select>
-	<input id="getStudentByCareer" type="button" value="Obtener">
-	<div id="studentsForCareer">
-	</div>
-	<div id="alertStudByCareer" class="alert alert-warning" role="alert" hidden></div>
-</div>
-
-<div class="getCrWithSt">
-	<h3>Obtener carreras con estudiantes inscriptos (ordenadas por cantidad de inscriptos)</h3>
-	<input id="getCarrers" type="button" value="Obtener">
-	<div id="carrerstWithInscript" >
-
-	</div>
-</div>
-
-<div class="getReport">
-	<p> Obtener reporte de las carreras</p>
-	<input id="getReport" type="button" value="Obtener">
-	<div id="reportContainer">
-		
-	</div>
-</div>
-
-
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<script src="js.js"> </script>
-
-</body>
-</html> -->
