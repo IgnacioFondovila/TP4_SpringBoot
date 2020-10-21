@@ -32,6 +32,7 @@ public class ClientController {
         return repo.findById(dni);
     }
 
+
     @PostMapping("/")
     public Client newClient(@RequestBody Client client){
         return repo.save(client);

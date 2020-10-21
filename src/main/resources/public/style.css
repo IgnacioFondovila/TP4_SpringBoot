@@ -1,0 +1,14 @@
+h2 {
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    margin-left: 30px;
+}
+
+header {
+    background-color: blue;
+    height: 30px;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
