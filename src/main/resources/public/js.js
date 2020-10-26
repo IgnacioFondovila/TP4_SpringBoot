@@ -1,29 +1,6 @@
 
 let url="http://localhost:8080/"
 
-// async function getAllCitys(){
-//     let url2 = url+'/students/citys';
-//     try {
-//         let r = await fetch(url2, {
-//             "method": "get"
-//         }, );
-//         let citys = await r.json();
-//         let selectCitys= document.querySelector("#allCitys");
-//         for(let c in citys){
-//             let opt=document.createElement("option");
-//             let spn=document.createElement("span");
-//             let cName= document.createTextNode(citys[c]);
-//             spn.append(cName);
-//             opt.value=citys[c];
-//             opt.append(spn);
-//             selectCitys.append(opt)
-//         }
-//     }
-//     catch{
-//
-//     }
-// }
-// getAllCitys();
 	
 //a)dar de alta un cliente
 let form = document.getElementById("addClient");
@@ -71,18 +48,63 @@ if(form != null){
         })
 }
 let putSelect = document.querySelector("#putSelect")
-putSelect.addEventListener("click", obtainClients)
+putSelect.addEventListener("focus", function(){obtainClients(putSelect)})
 
-function obtainClients(){
-    let clients = getAllClientsToSelect()
-    for(let c of clients.value){
-        let opt = document.createElement("option")
-        let txt = document.createTextNode(c.name)
-        opt.append(txt)
-        opt.value = c.dni
-        putSelect.appendChild(opt)
+async function obtainClients(selectElem){
+    try{
+        let clients = await getAllClientsToSelect()
+        removeAllChildNodes(selectElem)
+        let optAux = document.createElement("option")
+        let txtAux = document.createTextNode("Clientes")
+        optAux.append(txtAux)
+        optAux.hidden = true
+        selectElem.appendChild(optAux)
+        for(let c of clients){
+            let opt = document.createElement("option")
+            let txt = document.createTextNode(c.name)
+            opt.append(txt)
+            opt.value = JSON.stringify(c)
+            selectElem.appendChild(opt)
+        }
+    }
+    catch(e){
+        console.log(e)
     }
 }
+async function obtainProducts(selectElem){
+    try{
+        let products = await getAllProductsToSelect()
+        removeAllChildNodes(selectElem)
+        let optAuxProd = document.createElement("option")
+        let txtAuxProd = document.createTextNode("Productos")
+        optAuxProd.append(txtAuxProd)
+        optAuxProd.hidden = true
+        selectElem.appendChild(optAuxProd)
+        for(let p of products){
+            let opt = document.createElement("option")
+            let txt = document.createTextNode(p.name)
+            opt.append(txt)
+            opt.value = JSON.stringify(p)
+            selectElem.appendChild(opt)
+        }
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+
+// function obtainClients(){
+//     //por parametro que llegue el select
+//     let clients = getAllClientsToSelect()
+//     for(let c of clients.value){
+//         let opt = document.createElement("option")
+//         let txt = document.createTextNode(c.name)
+//         opt.append(txt)
+//         opt.value = c.dni
+//         putSelect.appendChild(opt)
+//     }
+// }
 
 let modifyClientForm = document.getElementById("modifyClient");
 if(form != null){
@@ -94,7 +116,8 @@ if(form != null){
         let data = {
             name: document.getElementById("nameP").value,
             surname: document.getElementById("surnameP").value,
-            dni: document.getElementById("dniP").value,
+            // dni: document.getElementById("dniP").value,
+            dni: putSelect.value,
             purchases: [],
         }
         let clientId = putSelect.value;
@@ -274,6 +297,21 @@ async function getAllClientsToSelect(){
         return null
     }
 }
+//Función auxiliar para obtener todos los productos
+async function getAllProductsToSelect(){
+    let url2 = url+'/products';
+    try {
+        let r = await fetch(url2, {
+            "method": "get"
+        });
+        let r2 = await r.json();
+        return r2
+    }catch (n) {
+        console.log("Error obteniendo productos");
+        return null
+    }
+}
+
 
 
 // d) recuperar un cliente, en base a su dni.
@@ -343,6 +381,53 @@ async function getClient(e){
     }
 }
 
+
+//Compraaaa--------------------------------------------------
+let addPClientSelect = document.querySelector("#clientsOfNewPurchase")
+addPClientSelect.addEventListener("focus", function(){obtainClients(addPClientSelect)})
+let addPProductSelect = document.querySelector("#productsOfNewPurchase")
+addPProductSelect.addEventListener("focus", function(){obtainProducts(addPProductSelect)})
+
+let purchaseSubmit = document.querySelector("#addPurchaseSubmit")
+purchaseSubmit.addEventListener("click", addPurchase)
+
+async function addPurchase(){
+    let client = JSON.parse(addPClientSelect.value)
+    let product = JSON.parse(addPProductSelect.value)
+
+    // console.log(clients)
+
+    let alrt=document.querySelector("#alertPu")
+    alrt.hidden=true
+
+    let count = document.querySelector("#amountOfNewPurchases").value;
+    // let client = clients.value;
+    // let product = products.value;
+    let div=document.getElementById("divInner");
+    removeAllChildNodes(div);
+
+    let url2 = url+"/purchases/"
+    let date = new Date()
+
+    let data = {
+        count: count,
+        day: date.getDate(),
+        month: date.getMonth(),
+        year: date.getFullYear(),
+        product: product,
+        client: client,
+    }
+    try{
+        let r = await fetch(url2, {
+            "method": "post",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        })
+        console.log(r)
+    }catch (e) {
+        console.log(e)
+    }
+}
 // //e) recuperar todos los estudiantes, en base a su género.
 // let btnGetStudentsGenre= document.getElementById("getAllStudentsByGenre");
 // btnGetStudentsGenre.addEventListener("submit", function(e){getAllStudentsByGenre(e)});
@@ -566,13 +651,68 @@ async function showDayReport(e){
         	}
 }
 
+document.getElementById("getClientsReport").addEventListener("click",showClientReport)
+
+async function showClientReport(e){
+    e.preventDefault();
+    let alrt=document.querySelector("#clientsReportAlert")
+    alrt.hidden=true
+    let div=document.getElementById("clientBalanceReport");
+    removeAllChildNodes(div);
+    let url2 = url+'purchases/report';
+    try {
+        let r = await fetch(url2, {
+            "method": "get"
+        });
+        let clients = await r.json();
+
+        if(clients!=[]){
+            let mapCl = Object.entries(clients.clients);
+            let tr= document.createElement("tr");
+            let tdName = document.createElement("td");
+            let name = document.createTextNode("NAME");
+            tdName.append(name)
+            let tdBalance = document.createElement("td");
+            let price = document.createTextNode("Total Balance");
+            tdBalance.append(price);
+            tr.append(tdName,tdBalance);
+            for (let [key, value] of mapCl) {
+                let trClient = document.createElement("tr");
+                let tdClient = document.createElement("td");
+                let client = document.createTextNode(key);
+                tdClient.append(client);
+
+                let tdBal = document.createElement("td");
+                let bal = document.createTextNode(value);
+                tdBal.append(bal);
+
+                trClient.append(tdClient,tdBal);
+                tr.append(trClient);
+            }
+            div.appendChild(tr)
+        }else{
+            let h = document.createElement("h4");
+            let txt = document.createTextNode("No se encontró ningún cliente");
+            h.append(txt);
+            alrt.appendChild(h);
+            alrt.hidden = false;
+        }
+    }catch{
+        let h = document.createElement("h4");
+        let txt = document.createTextNode("No se encontró ningún cliente");
+        h.append(txt);
+        alrt.appendChild(h);
+        alrt.hidden = false;
+    }
+}
+
 
 //Productooooo----------------------------------------------
 
 let prodForm = document.getElementById("addProduct");
-if(form != null){
-    form.addEventListener('submit',function(e){
-        let alrt=document.querySelector("#getProductAlert");
+if(prodForm != null){
+    prodForm.addEventListener('submit',function(e){
+        let alrt=document.querySelector("#addProductAlert");
         alrt.hidden = true;
         removeAllChildNodes(alrt);
         e.preventDefault();
@@ -582,7 +722,7 @@ if(form != null){
             stock: document.getElementById("stock").value,
             purchases: []
         }
-        fetch(url + '/product/', {
+        fetch(url + '/products/', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(data)
@@ -599,7 +739,7 @@ if(form != null){
                 let txt = document.createTextNode("El cliente No se agrego ");
                 h.append(txt);
                 alrt.appendChild(h);
-                alrt.hidqden = false;
+                alrt.hidden = false;
             })
     })
 }
@@ -609,13 +749,13 @@ let btnGetAllProducts= document.getElementById("getProducts");
 btnGetAllProducts.addEventListener("click", getAllProducts);
 
 async function getAllProducts(){
-    let url2 = url+'/products/';
+    let url2 = url+'/products';
     try {
         let r = await fetch(url2, {
             "method": "get"
         }, showProducts);
         let r2 = await r.json();
-        let contProd= document.querySelector("#showProducts");
+        let contProd= document.querySelector("#showAllProducts");
         showProducts(r2,contProd)
     }catch (n) {
         console.log("Error obteniendo clientes"+n);
@@ -757,7 +897,7 @@ function deleteProduct(e){
     removeAllChildNodes(alrt);
     e.preventDefault();
     let id =document.querySelector("#getProd").value;
-    fetch(url + '/product/'+id, {
+    fetch(url + '/products/'+id, {
         method: 'DELETE',
     })
         .then(response => {
@@ -845,7 +985,7 @@ async function getProductMostSell(e){
 
 //---------------------helpers------------------------------------
 function showProducts(products,container) {
-    removeAllChildNodes(container);
+    removeAllChildNodes(container)
 
     let tr= document.createElement("tr");
     let liName = document.createElement("td");
@@ -864,7 +1004,7 @@ function showProducts(products,container) {
     container.appendChild(tr)
 
     for (let pr of products) {
-        let ul = document.createElement("tr");
+        let ulPr = document.createElement("tr");
         let liN = document.createElement("td");
         let sName = document.createTextNode(pr.name);
         liN.append(sName);
@@ -874,12 +1014,12 @@ function showProducts(products,container) {
         let liSt = document.createElement("td");
         let prSt = document.createTextNode(pr.stock);
         liSt.append(prSt);
-        ul.append( liN, liP, liSt);
+        ulPr.append( liN, liP, liSt);
         let liID = document.createElement("td");
         let prID = document.createTextNode(pr.id);
         liID.append(prID);
-        ul.append( liN, liP, liSt,liID);
-        container.appendChild(ul)
+        ulPr.append( liN, liP, liSt,liID);
+        container.appendChild(ulPr)
     }
 }
 
@@ -970,8 +1110,6 @@ function showClients(clients,container) {
 //}
 
 function removeAllChildNodes(parent) {
-//	console.log(parent)
-//	if (parent==undefined){return}
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
     }

@@ -25,6 +25,7 @@ class TestInsert {
             return args -> {
                 Client c1 = repoClient.save(new Client((long) 1234, "Seba", "Perez"));
                 Client c2 = repoClient.save(new Client((long) 2345, "Juan", "Dominguez"));
+//                Para correr el server de nuevo sin recargar la bbdd habria que ponerles id a estos
                 Product p1 = repoProduct.save(new Product("Galletas dulces", 50, 100));
                 Product p2 = repoProduct.save(new Product("Biscochos", 60, 200));
                 Product p3 = repoProduct.save(new Product("Marineras", 80, 300));

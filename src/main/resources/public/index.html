@@ -28,30 +28,29 @@
 	<div id="putAlert" class="alert alert-warning" role="alert" hidden>
 	</div>
 	<form id="modifyClient" method="POST">
-		<select id="putSelect">
+		<select id="putSelect" placeholder="dni">
 		</select>
 		<input required placeholder="dni" id="dniP" type="number">
 		<input required placeholder="name" id="nameP" type="text">
 		<input required placeholder="surname" id="surnameP" type="text">
-		<input type="submit" value="Dar de alta">
+		<input type="submit" value="Modificar">
 	</form>
 </div>
 
-<!--todo-->
-<div class="addMt">
-	<h3> Matricular</h3>
-	<div id="alertMat" class="alert alert-warning" role="alert" hidden>
-	</div>
-	<form id="addMat" method="POST">
-		<input required type="text"  id="MatriLu" placeholder="lu">
-		<input required type="number" id="starYear" placeholder="starYear" >
-		<input required type="number" id="graduationYear" placeholder="graduationYear" >
-		<select id="allCareers1" class="allCareers">
-			<option value="0" selected hidden>Carreras</option>
-		</select>
-		<input type="submit" value="Matricular">
-	</form>
-</div>
+<!--<div class="addMt">-->
+<!--	<h3> Matricular</h3>-->
+<!--	<div id="alertMat" class="alert alert-warning" role="alert" hidden>-->
+<!--	</div>-->
+<!--	<form id="addMat" method="POST">-->
+<!--		<input required type="text"  id="MatriLu" placeholder="lu">-->
+<!--		<input required type="number" id="starYear" placeholder="starYear" >-->
+<!--		<input required type="number" id="graduationYear" placeholder="graduationYear" >-->
+<!--		<select id="allCareers1" class="allCareers">-->
+<!--			<option value="0" selected hidden>Carreras</option>-->
+<!--		</select>-->
+<!--		<input type="submit" value="Matricular">-->
+<!--	</form>-->
+<!--</div>-->
 
 
 <div class="getClientsContainer">
@@ -130,13 +129,13 @@
 </div> -->
 
 
-<div class="getCrWithSt">
-	<h3> Obtener carreras con inscriptos </h3>
-	<input id="getCarrers" type="button" value="Obtener">
-	<div id="carrerstWithInscript" >
+<!--<div class="getCrWithSt">-->
+<!--	<h3> Obtener carreras con inscriptos </h3>-->
+<!--	<input id="getCarrers" type="button" value="Obtener">-->
+<!--	<div id="carrerstWithInscript" >-->
 
-	</div>
-</div>
+<!--	</div>-->
+<!--</div>-->
 
 
 <div class="container">
@@ -154,7 +153,7 @@
 <div class="container">
 	<h3> Obtener productos </h3>
 	<input id="getProducts" type="button" value="Obtener todos los productos">
-	<div id="showProducts">
+	<div id="showAllProducts">
 	</div>
 </div>
 
@@ -175,12 +174,33 @@
 
 	<input hidden type="button" id="uptPr" value="Modify Product">
 
-	<form hidden id="uptdateProduct">
+	<form hidden id="updateProduct">
 		<input required placeholder="name"  id="u_name" type="text">
 		<input required placeholder="price" id="u_price" type="number">
 		<input required placeholder="stock" id="u_stock" type="number">
-		<input type="submit" value="Uptadate">
+		<input type="submit" value="Update">
 	</form>
+</div>
+
+<div class="container">
+	<h3>Hacer una compra</h3>
+	<div id="alertPu" class="alert alert-warning" role="alert" hidden>
+	</div>
+	<input id="amountOfNewPurchases" type="number" placeholder="Qué cantidad quiere comprar?" min="1">
+	<!--Se necesita un get de clientes-->
+	<label for="clientsOfNewPurchase">Quién quiere hacer una compra?</label>
+	<select id="clientsOfNewPurchase">
+
+	</select>
+	<!--Se necesita un get de productos-->
+	<label for="productsOfNewPurchase">Qué producto quiere comprar?</label>
+	<select id="productsOfNewPurchase">
+
+	</select>
+	<input type="submit" id="addPurchaseSubmit" value="Hacer compra">
+<!--	<div hidden id="ProductMostSell">-->
+
+<!--	</div>-->
 </div>
 
 
@@ -200,6 +220,17 @@
 
 	</div>
 </div>
+
+<div class="container">
+	<h3> Obtener Reporte de clientes </h3>
+	<div id="clientsReportAlert" class="alert alert-warning" role="alert" hidden>
+	</div>
+	<input id="getClientsReport" type="button" value="Obtener el balance de todos los clientes">
+	<div hidden id="clientBalanceReport" >
+
+	</div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

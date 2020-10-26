@@ -1,10 +1,13 @@
 package com.example.tpe4spb.controller;
 
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.example.tpe4spb.dto.ClientBalanceElemDTO;
 import com.example.tpe4spb.dto.ClientsBalanceReportDTO;
+import com.example.tpe4spb.model.Client;
 import com.example.tpe4spb.model.Product;
 import com.example.tpe4spb.model.Purchase;
+import com.example.tpe4spb.repository.ProductRepository;
 import com.example.tpe4spb.repository.PurchaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,10 +24,16 @@ public class PurchaseController {
     @Qualifier("purchaseRepository")
     @Autowired
     private final PurchaseRepository repo;
+    @Qualifier("productController")
+    @Autowired
+    private final ProductController controllerProd;
+
+
 
     //Se declara el repo----------------------------------
-    public PurchaseController (@Qualifier("purchaseRepository") PurchaseRepository repository){
+    public PurchaseController (@Qualifier("purchaseRepository") PurchaseRepository repository, @Qualifier("productController") ProductController repository2){
         this.repo = repository;
+        this.controllerProd = repository2;
     }
 
     //Métodos CRUD aquí abajo------------------------------
@@ -38,9 +47,30 @@ public class PurchaseController {
         return repo.findById(id);
     }
 
+
+//    @PostMapping("/client/{dni}/product/{product}/day/{day}/month/{month}/year/{year}")
     @PostMapping("/")
     public Purchase newPurchase(@RequestBody Purchase purchase){
-        return repo.save(purchase);
+//        Aqui va el chequeo de que los clientes
+//        no tengan más de dos compras ya hechas
+        Client client = purchase.getClient();
+        Product product = purchase.getProduct();
+        int day = purchase.getDay();
+        int month = purchase.getMonth();
+        int year = purchase.getYear();
+        int clientPurchases = repo.getPurchasesOfClient(client, day, month, year, product);
+        try {
+                if (clientPurchases < 3 && product.getStock() >= purchase.getCount()) {
+                    product.setStock(product.getStock()-purchase.getCount());
+                    controllerProd.replaceProduct(purchase.getProduct(), purchase.getProduct().getId());
+                    return repo.save(purchase);
+                }
+//            }
+        }catch (Exception n){
+            System.out.println("error:"+n);
+        }
+        return null;
+//        Response?
     }
 
     @DeleteMapping("/{id}")
@@ -101,8 +131,8 @@ public class PurchaseController {
 
     //Método para conseguir el producto más vendido de todos---------------------
     @GetMapping("/mostsell")
-    public Product getProductMostBuy(){
-        return (Product) repo.findMostSell(PageRequest.of(0,1));
+    public List<Product> getProductMostBuy(){
+        return (List<Product>) repo.findMostSell(PageRequest.of(0,1));
     }
 
 }
