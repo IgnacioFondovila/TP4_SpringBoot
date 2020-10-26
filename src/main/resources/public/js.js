@@ -92,6 +92,10 @@ async function obtainProducts(selectElem){
         console.log(e)
     }
 }
+obtainProducts(document.querySelector("#productsOfNewPurchase"))
+obtainClients(document.querySelector("#putSelect"))
+obtainClients(document.querySelector("#clientsOfNewPurchase"))
+
 
 
 // function obtainClients(){
@@ -665,7 +669,6 @@ async function showClientReport(e){
             "method": "get"
         });
         let clients = await r.json();
-
         if(clients!=[]){
             let mapCl = Object.entries(clients.clients);
             let tr= document.createElement("tr");
@@ -676,6 +679,7 @@ async function showClientReport(e){
             let price = document.createTextNode("Total Balance");
             tdBalance.append(price);
             tr.append(tdName,tdBalance);
+            div.appendChild(tr)
             for (let [key, value] of mapCl) {
                 let trClient = document.createElement("tr");
                 let tdClient = document.createElement("td");
@@ -687,9 +691,9 @@ async function showClientReport(e){
                 tdBal.append(bal);
 
                 trClient.append(tdClient,tdBal);
-                tr.append(trClient);
+                div.append(trClient);
             }
-            div.appendChild(tr)
+            div.hidden = false
         }else{
             let h = document.createElement("h4");
             let txt = document.createTextNode("No se encontró ningún cliente");

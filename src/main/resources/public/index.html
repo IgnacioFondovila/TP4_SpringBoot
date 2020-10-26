@@ -80,7 +80,7 @@
 	</div>
 	<form id="deleteClientForm">
 		<input required id="deleteClient" type="number" placeholder="Documento de identidad">
-		<input type="submit" value="Obtener">
+		<input type="submit" value="Borrar">
 	</form>
 	<div hidden id="divInnerDelete">
 
@@ -170,15 +170,15 @@
 	<div hidden id="divGetProd">
 
 	</div>
-	<input hidden type="button" id="delPr" value="Delete Product">
+	<input hidden type="button" id="delPr" value="Borrar">
 
-	<input hidden type="button" id="uptPr" value="Modify Product">
+	<input hidden type="button" id="uptPr" value="Modificar">
 
 	<form hidden id="updateProduct">
 		<input required placeholder="name"  id="u_name" type="text">
 		<input required placeholder="price" id="u_price" type="number">
 		<input required placeholder="stock" id="u_stock" type="number">
-		<input type="submit" value="Update">
+		<input type="submit" value="<Modificar>">
 	</form>
 </div>
 
@@ -205,9 +205,10 @@
 
 
 <div class="container">
+	<h3>Obtener el producto más vendido</h3>
 	<div id="alertPrMost" class="alert alert-warning" role="alert" hidden>
 	</div>
-	<input id="getProductMostSell" type="button" value="Obtener producto mas vendido">
+	<input id="getProductMostSell" type="button" value="Obtener producto más vendido">
 	<div hidden id="ProductMostSell" >
 
 	</div>
