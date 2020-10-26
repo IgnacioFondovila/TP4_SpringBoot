@@ -1,0 +1,471 @@
+{
+	"info": {
+		"_postman_id": "ee04d9ba-e624-4f99-8eab-8a52486c7a20",
+		"name": "TP4SpringBoot",
+		"description": "Aqui se guardaran los request relacionados a la talba Client",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "AddProduct",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Yogurt\",\r\n    \"price\": \"49\",\r\n    \"stock\": \"49\",\r\n    \"purchases\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/products/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteProductByID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/products/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllProducts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/products/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModifyProductByID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Yogurt\",\r\n    \"price\": \"69\",\r\n    \"stock\": \"29\",\r\n    \"purchases\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/products/11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetProductByID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/products/11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products",
+								"11"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Clients",
+			"item": [
+				{
+					"name": "ModifyClientByDNI",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Juan\",\r\n    \"surname\": \"Dominguez\",\r\n    \"purchases\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/clients/1234",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"clients",
+								"1234"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllClients",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/clients/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"clients",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetClientByDNI",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/clients/2345",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"clients",
+								"2345"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddClient",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dni\": 19765,\r\n    \"name\": \"Julio \",\r\n    \"surname\": \"Rawson\",\r\n    \"purchases\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/clients/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"clients",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteClientByDNI",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/clients/2345",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"clients",
+								"2345"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Purchases",
+			"item": [
+				{
+					"name": "GetAllPurchases",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/purchases/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"purchases",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetPurchaseByID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/purchases/8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"purchases",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddPurchase",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"id\": 29,\r\n        \"client\": {\r\n            \"dni\": 1234,\r\n            \"name\": \"Seba\",\r\n            \"surname\": \"Perez\"\r\n        },\r\n        \"product\":{\r\n            \"id\": 1,\r\n            \"name\": \"Galletas dulces\",\r\n            \"price\": 50,\r\n            \"stock\": 100\r\n        },\r\n        \"count\":12,\r\n        \"day\": 20,\r\n        \"month\": 8,\r\n        \"year\": 1990\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/purchases/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"purchases",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModifyPurchaseByID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"client\": {\r\n            \"dni\": 1234,\r\n            \"name\": \"Seba\",\r\n            \"surname\": \"Perez\"\r\n        },\r\n        \"product\":{\r\n            \"id\": 1,\r\n            \"name\": \"Galletas dulces\",\r\n            \"price\": 50,\r\n            \"stock\": 100\r\n        },\r\n        \"day\": 1,\r\n        \"month\": 2,\r\n        \"year\": 1989\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/purchases/13",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"purchases",
+								"13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeletePurchaseByID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"client\": {\r\n            \"dni\": 1234,\r\n            \"name\": \"Seba\",\r\n            \"surname\": \"Perez\"\r\n        },\r\n        \"product\":{\r\n            \"id\": 1,\r\n            \"name\": \"Galletas dulces\",\r\n            \"price\": 50,\r\n            \"stock\": 100\r\n        },\r\n        \"day\": 1,\r\n        \"month\": 2,\r\n        \"year\": 1989\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/purchases/13",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"purchases",
+								"13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetPurchaseDayReport",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/purchases/report/day/19/month/9/year/2020",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"purchases",
+								"report",
+								"day",
+								"19",
+								"month",
+								"9",
+								"year",
+								"2020"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetClientsPurchaseReport",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/purchases/report/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"purchases",
+								"report",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetMostSell",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/purchases/mostsell",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"purchases",
+								"mostsell"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
