@@ -14,4 +14,4 @@ Para poder probar las consultas desde Postman se debe (ademas de seguir todos lo
 
 Ingresar a este link "https://www.getpostman.com/collections/f0d9a47f881874f3e2b5"
 
-O importar el archivo "Postman_collection" a Postman 
+O importar el archivo "Postman_collection" a Postman
